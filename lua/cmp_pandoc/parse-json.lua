@@ -1,6 +1,6 @@
 local Path = require("plenary.path")
 local yml = require "lyaml"
-local json = require "json"
+local json = require "lunajson"
 
 local M = {}
 
