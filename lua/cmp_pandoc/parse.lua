@@ -218,6 +218,25 @@ local function parse_json_bib(filename)
               translators = combine_names(translators, nil)
               table.insert(doc, translators .. ' (trans)')
             end
+            
+            local date = item.issued or nil
+            if date then
+              date = date.literal or nil
+              if date then
+                 table.insert(doc, date)
+              else
+                date = item.issued['date-parts'] or nil
+                if date then
+                  date = date[1] or nil
+                end
+                if date then
+                  date = date[1] or nil
+                end
+                if date then
+                  table.insert(doc, date)
+                end
+              end
+            end
 
             doc = table.concat(doc, '\n')
             return { 
