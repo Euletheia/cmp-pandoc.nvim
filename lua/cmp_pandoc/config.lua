@@ -5,6 +5,8 @@ return {
   filetypes = { "pandoc", "markdown", "rmd" },
   -- Customize bib documentation
   bibliography = {
+    -- Global default bibliograph file
+    path = nil,
     -- Enable bibliography documentation
     -- @type: boolean
     documentation = true,

@@ -1,5 +1,7 @@
 local Path = require("plenary.path")
 local utils = require("cmp_pandoc.utils")
+local cmp = require("cmp")
+local json = require('lunajson')
 
 local M = {}
 
@@ -149,13 +151,94 @@ local citations = function(path, opts)
   end, o)
 end
 
+local function combine_names(names, suffix)
+  local full_names = {}
+  for _,name in ipairs(names) do
+    local full_name = name.literal or name.family or ''
+    local non_drop = name['non-dropping-particle'] or ''
+    full_name = non_drop .. full_name
+    local given = name.given or ''
+    local drop = name['dropping-particle'] or ''
+    if drop ~= '' then
+      given = given .. ' ' .. drop
+    end
+    if given ~= '' then
+      full_name = given .. ' ' .. full_name
+    end
+    if full_name ~= '' then
+      table.insert(full_names, full_name)
+    end
+  end
+  full_names = table.concat(full_names, ' and ')
+  if suffix then
+    if #names > 1 then
+      full_names = full_names .. ' (' .. suffix .. 's)'
+    else
+      full_names = full_names .. ' (' .. suffix .. ')'
+    end
+  end
+
+  return full_names
+end
+
+-- Parses the .json file
+local function parse_json_bib(filename)
+	local file = io.open(filename, 'rb')
+	local bibentries = file:read('*all')
+	file:close()
+    local data = json.decode(bibentries)
+    return vim.tbl_map(
+        function(item)
+            local id = item.id or ''
+            
+            local doc = {}
+            
+            local type = item.type or ''
+            type = type:gsub("^%l", string.upper):gsub('-journal','')
+            table.insert(doc, '# ' .. type)
+
+            local title = item['title-short'] or item.title or ''
+            title = title:gsub('[{}]+','')
+            table.insert(doc, '*' .. title .. '*')
+
+            local authors = item.author or nil 
+            if authors then
+              authors = combine_names(authors, nil)
+              table.insert(doc, authors)
+            end
+
+            local editors = item.editor or nil 
+            if editors then
+              editors = combine_names(editors, 'ed')
+              table.insert(doc, editors)
+            end
+            
+            local translators = item.translator or nil 
+            if translators then
+              translators = combine_names(translators, nil)
+              table.insert(doc, translators .. ' (trans)')
+            end
+
+            doc = table.concat(doc, '\n')
+            return { 
+                  label = '@' .. id,
+                  kind = cmp.lsp.CompletionItemKind.Reference,
+                  documentation = {
+                     kind = cmp.lsp.MarkupKind.Markdown,
+                     value = doc,
+                  }
+               }
+        end, data)
+end
+
+
 M.bibliography = function(bufnr, opts)
   local bib_paths = M.get_bibliography_paths(bufnr)
 
   if vim.g["pandoc#biblio#bibs"] then
     bib_paths = vim.g["pandoc#biblio#bibs"]
   end
-
+ 
   if not bib_paths then
     return
   end
@@ -228,8 +311,17 @@ end
 
 M.init = function(self, callback, bufnr)
   local opts = self and self.opts or require("cmp_pandoc.config")
+ 
+  local bib = opts.bibliography.path 
+  local bib_type = bib:match "[^.]+$"
 
-  local bib_items = M.bibliography(bufnr, opts.bibliography)
+  local bib_items = nil
+  if bib_type == 'json' then
+    bib_items = parse_json_bib(bib)
+  else
+    bib_items = M.bibliography(bufnr, opts.bibliography)
+  end
+
   local reference_items = M.references(bufnr, opts.crossref)
 
   local all_entrys = {}
