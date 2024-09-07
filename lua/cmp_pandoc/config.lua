@@ -5,7 +5,8 @@ return {
   filetypes = { "pandoc", "markdown", "rmd" },
   -- Customize bib documentation
   bibliography = {
-    -- Global default bibliograph file
+    -- Global default bibliography file
+    -- @type: string
     path = nil,
     -- Enable bibliography documentation
     -- @type: boolean
@@ -19,8 +20,5 @@ return {
     -- Enable documetation
     -- @type: boolean
     documentation = true,
-    -- Use nabla.nvim to render LaTeX equation to ASCII
-    -- @type: boolean
-    enable_nabla = false,
   },
 }

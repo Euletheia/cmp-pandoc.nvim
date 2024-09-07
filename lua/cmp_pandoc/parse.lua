@@ -1,4 +1,6 @@
+local vim = vim
 local cmp = require("cmp")
+local utils = require("cmp_pandoc.utils")
 
 local M = {}
 
@@ -103,59 +105,59 @@ local function parse_json_bib(filename)
 end
 
 
--- local crossreferences = function(line, opts)
---   if string.match(line, utils.crossref_patterns.equation) and string.match(line, "^%$%$(.*)%$%$") then
---     local equation = string.match(line, "^%$%$(.*)%$%$")
---
---     return utils.format_entry({
---       label = string.match(line, utils.crossref_patterns.equation),
---       doc = opts.documentation,
---       value = opts.enable_nabla and utils.nabla(equation) or equation,
---     })
---   end
---
---   if string.match(line, utils.crossref_patterns.section) and string.match(line, "^#%s+(.*){") then
---     return utils.format_entry({
---       label = string.match(line, utils.crossref_patterns.section),
---       value = "*" .. vim.trim(string.match(line, "#%s+(.*){")) .. "*",
---     })
---   end
---
---   if string.match(line, utils.crossref_patterns.table) then
---     return utils.format_entry({
---       label = string.match(line, utils.crossref_patterns.base),
---       value = "*" .. vim.trim(string.match(line, "^:%s+(.*)%s+{")) .. "*",
---     })
---   end
---
---   if string.match(line, utils.crossref_patterns.lst) then
---     return utils.format_entry({
---       label = string.match(line, utils.crossref_patterns.lst),
---       value = "*" .. vim.trim(string.match(line, "^:%s+(.*)%s+{")) .. "*",
---     })
---   end
---
---   if string.match(line, utils.crossref_patterns.figure) then
---     return utils.format_entry({
---       label = string.match(line, utils.crossref_patterns.figure),
---       value = "*" .. vim.trim(string.match(line, "^%!%[.*%]%((.*)%)")) .. "*",
---     })
---   end
--- end
+local crossreferences = function(line, opts)
+  if string.match(line, utils.crossref_patterns.equation) and string.match(line, "^%$%$(.*)%$%$") then
+    local equation = string.match(line, "^%$%$(.*)%$%$")
 
--- M.references = function(bufnr, opts)
---   local valid_lines = vim.tbl_filter(function(line)
---     return line:match(utils.crossref_patterns.base) and not line:match("^%<!%-%-(.*)%-%-%>$")
---   end, vim.api.nvim_buf_get_lines(bufnr, 0, -1, true))
---
---   if vim.tbl_isempty(valid_lines) then
---     return
---   end
---
---   return vim.tbl_map(function(line)
---     return crossreferences(line, opts)
---   end, valid_lines)
--- end
+    return utils.format_entry({
+      label = string.match(line, utils.crossref_patterns.equation),
+      doc = opts.documentation,
+      value = opts.enable_nabla and utils.nabla(equation) or equation,
+    })
+  end
+
+  if string.match(line, utils.crossref_patterns.section) and string.match(line, "^#%s+(.*){") then
+    return utils.format_entry({
+      label = string.match(line, utils.crossref_patterns.section),
+      value = "*" .. vim.trim(string.match(line, "#%s+(.*){")) .. "*",
+    })
+  end
+
+  if string.match(line, utils.crossref_patterns.table) then
+    return utils.format_entry({
+      label = string.match(line, utils.crossref_patterns.base),
+      value = "*" .. vim.trim(string.match(line, "^:%s+(.*)%s+{")) .. "*",
+    })
+  end
+
+  if string.match(line, utils.crossref_patterns.lst) then
+    return utils.format_entry({
+      label = string.match(line, utils.crossref_patterns.lst),
+      value = "*" .. vim.trim(string.match(line, "^:%s+(.*)%s+{")) .. "*",
+    })
+  end
+
+  if string.match(line, utils.crossref_patterns.figure) then
+    return utils.format_entry({
+      label = string.match(line, utils.crossref_patterns.figure),
+      value = "*" .. vim.trim(string.match(line, "^%!%[.*%]%((.*)%)")) .. "*",
+    })
+  end
+end
+
+M.references = function(bufnr, opts)
+  local valid_lines = vim.tbl_filter(function(line)
+    return line:match(utils.crossref_patterns.base) and not line:match("^%<!%-%-(.*)%-%-%>$")
+  end, vim.api.nvim_buf_get_lines(bufnr, 0, -1, true))
+
+  if vim.tbl_isempty(valid_lines) then
+    return
+  end
+
+  return vim.tbl_map(function(line)
+    return crossreferences(line, opts)
+  end, valid_lines)
+end
 
 M.init = function(self, callback, bufnr)
   local opts = self and self.opts or require("cmp_pandoc.config")
@@ -173,13 +175,13 @@ M.init = function(self, callback, bufnr)
   local bib_items = nil
   bib_items = parse_json_bib(bib)
 
-  -- local reference_items = M.references(bufnr, opts.crossref)
+  local reference_items = M.references(bufnr, opts.crossref)
 
   local all_entrys = {}
 
-  -- if reference_items then
-  --   vim.list_extend(all_entrys, reference_items)
-  -- end
+  if reference_items then
+    vim.list_extend(all_entrys, reference_items)
+  end
 
   if bib_items then
     vim.list_extend(all_entrys, bib_items)

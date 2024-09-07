@@ -1,6 +1,5 @@
 local config = require("cmp_pandoc.config")
 local parse = require("cmp_pandoc.parse")
---local parse = require("cmp_pandoc.parse-json")
 
 local source = {
   opts = {},
