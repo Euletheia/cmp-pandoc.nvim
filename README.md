@@ -1,5 +1,27 @@
 # cmp-pandoc
 
+# Hacked up version
+
+This is a hacked up and simplified version of cmp-pandoc. I've removed support for bibtex
+files, and only support json files. I've also removed support for detecting
+the bibliography in the YAML front matter. The bibliography is set globally
+using the setup function instead. I've also (temporarily) removed support for
+cross-reference completion.
+
+```lua
+require'cmp_pandoc'.setup({
+  filetypes = { "pandoc", "markdown", "rmd", 'markdown.pandoc', 'markdown.pandoc.carnap' },
+  bibliography = {
+    path = '/Users/desanso/Documents/zotero.json',
+    documentation = true,
+  },
+})
+```
+
+
+
+## Original README
+
 Pandoc source for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 ![image](https://user-images.githubusercontent.com/16160544/148705263-68701848-485d-4ebe-ac78-b901a40dd5a1.png)
