@@ -1,6 +1,15 @@
 # cmp-pandoc
 
-# Hacked up version
+# This fork
+
+Tries to enhance the hacks from dsanson to allow synergies between vim-pandoc & cmp-pandoc
+
+## Objectives
+
+* Parsing of multiple (csl json) bibliographies in cmp-pandoc global config
+* Adding extra csl fields like 
+
+# Hacked up version (dsanson preambule)
 
 This is a hacked up and simplified version of cmp-pandoc. I've removed support for bibtex
 files, and only support json files. I've also removed support for detecting
@@ -17,8 +26,6 @@ require'cmp_pandoc'.setup({
   },
 })
 ```
-
-
 
 ## Original README
 

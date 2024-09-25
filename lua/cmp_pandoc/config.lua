@@ -5,15 +5,15 @@ return {
   filetypes = { "pandoc", "markdown", "rmd" },
   -- Customize bib documentation
   bibliography = {
-    -- Global default bibliography file
-    -- @type: string
-    path = nil,
+    -- Global default bibliography file(s)
+    -- @type: table of string
+    path = {},
     -- Enable bibliography documentation
     -- @type: boolean
     documentation = true,
     -- Fields to show in documentation
     -- @type: table of string
-    fields = { "type", "title", "author", "year" },
+    fields = { "type", "title", "author", "year", "original date" },
   },
   -- Crossref
   crossref = {

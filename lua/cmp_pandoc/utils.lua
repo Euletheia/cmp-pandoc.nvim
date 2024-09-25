@@ -1,4 +1,4 @@
-local nabla_avilable, _ = pcall(require, "nabla")
+local nabla_available, _ = pcall(require, "nabla")
 local cmp = require("cmp")
 local M = {}
 
@@ -8,6 +8,7 @@ local bib_patterns = {
   title = "title%s*=%s*[{]*(.-)[}],",
   author = 'author%s*=%s*["{]*(.-)["}],?',
   year = 'year%s*=%s*["{]?(%d+)["}]?,?',
+  original_date = ""
 }
 
 local template = {
@@ -15,6 +16,7 @@ local template = {
   title = "*%s*",
   author = "- %s",
   year = "%s",
+  original_date = "%s",
 }
 
 local crossref_patterns = {
@@ -61,7 +63,7 @@ M.format_entry = function(opts)
 end
 
 M.nabla = function(str)
-  if not nabla_avilable then
+  if not nabla_available then
     return "nabla not found"
   end
 
