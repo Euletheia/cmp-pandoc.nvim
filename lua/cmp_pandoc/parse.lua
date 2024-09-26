@@ -187,15 +187,17 @@ M.init = function(self, callback, bufnr)
 
   local bibs = {}
 
-  -- TODO : Extend $HOME variable if found in path
   for i = 1, #bibfield do
     local bib_type = string.match(bibfield[i], "[^.]+$")
     if bib_type == "json" then
       local bibpath = vim.fn.expand(bibfield[i])
       print(bibpath)
-      vim.list_extend(bibs, bibpath)
+      -- vim.fn.table_insert(bibs, bibpath)
+      table.insert(bibs, bibpath)
+      -- vim.list_extend(bibs, { bibpath })
     end
   end
+  print(bibs)
 
   local bib_items = {}
   for i = 1, #bibs do
