@@ -13,7 +13,7 @@ return {
     documentation = true,
     -- Fields to show in documentation
     -- @type: table of string
-    fields = { "type", "title", "author", "year", "original date" },
+    fields = { "type", "title", "author", "year" },
   },
   -- Crossref
   crossref = {

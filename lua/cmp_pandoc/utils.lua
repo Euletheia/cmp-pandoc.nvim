@@ -8,7 +8,6 @@ local bib_patterns = {
   title = "title%s*=%s*[{]*(.-)[}],",
   author = 'author%s*=%s*["{]*(.-)["}],?',
   year = 'year%s*=%s*["{]?(%d+)["}]?,?',
-  original_date = ""
 }
 
 local template = {
@@ -16,7 +15,6 @@ local template = {
   title = "*%s*",
   author = "- %s",
   year = "%s",
-  original_date = "%s",
 }
 
 local crossref_patterns = {
