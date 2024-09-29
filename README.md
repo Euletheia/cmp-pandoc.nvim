@@ -1,38 +1,47 @@
-# cmp-pandoc
-
-# This fork
-
-This fork tries to provide the "best of both worlds" by expanding the work of [dsanson](https://github.com/dsanson/cmp-pandoc.nvim) and [aspeddro](https://github.com/aspeddro/cmp-pandoc.nvim/) (the plugin original author) and adding key features I needed for my work.
-
-# Exclusive Features
-
-* Two ways of providing bibliographies files :
-  * in the plugin configuration (setup({}) / opts = {})
-  * in the document yaml metadata block
-* Support for csl .json and .bib formats
-* Multiple named bibliographies in the style recognized by the [multibib](https://github.com/pandoc-ext/multibib) pandoc filter.
-* Additional documentation fields :
-  * original-date (only for .json)
-
--------------------------
-## Original README
+# 📑 cmp-pandoc
 
 Pandoc source for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 ![image](https://user-images.githubusercontent.com/16160544/148705351-6ff6fe46-0061-4c7f-989b-31f9e7be3c1c.png)
 
-## Requirements
+## This fork
 
-- `Neovim >= 0.5.0`
-- [`plenary.nvim`](https://github.com/nvim-lua/plenary.nvim)
+This fork tries to provide the "best of both worlds" by expanding the work of [dsanson](https://github.com/dsanson/cmp-pandoc.nvim) and [aspeddro](https://github.com/aspeddro/cmp-pandoc.nvim/) (the plugin original author) and adding key features I needed for my work.
 
 ## Features
+
+### Exclusive Features
+
+* Two ways of providing bibliographies files :
+  * in the plugin configuration (setup({}) / opts = {})
+  * in the document yaml metadata block
+* Support for csl .json and .bib formats
+* Multiple **named** bibliographies in the style recognized by the [multibib](https://github.com/pandoc-ext/multibib) pandoc filter.
+* Additional documentation fields :
+  * original-date (only for .json)
+
+### Original Features
 
 - Multiple bibliography files
 - Support [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref)
 - Equation preview with [`nabla.nvim`](https://github.com/jbyuki/nabla.nvim)
 
+## Requirements
+
+- `Neovim >= 0.5.0`
+- [`plenary.nvim`](https://github.com/nvim-lua/plenary.nvim)
+- [nabla.nvim](https://github.com/jbyuki/nabla.nvim) (needed : for equation preview)
+
 ## Installation
+
+#### [lazy.nvim](https://github.com/folke/lazy.nvim)
+
+```lua
+return {
+  "Euletheia/cmp-pandoc.nvim",
+  opts = {},
+}
+```
 
 #### [packer.nvim](https://github.com/wbthomason/packer.nvim)
 
@@ -53,7 +62,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'jbyuki/nabla.nvim' "optional
 Plug 'aspeddro/cmp-pandoc.nvim'
 ```
-
 ## Setup
 
 ```lua
@@ -62,7 +70,6 @@ require'cmp'.setup{
     { name = 'cmp_pandoc' }
   }
 }
-require'cmp_pandoc'.setup()
 ```
 
 ## Configuration (optional)
@@ -77,6 +84,9 @@ Following are the default config for the `setup()`. If you want to override, jus
   filetypes = { "pandoc", "markdown", "rmd" },
   -- Customize bib documentation
   bibliography = {
+    path = {
+      "/Path/to/a/bibfile.json", "/Path/to/another/bibfile.bib"
+    },
     -- Enable bibliography documentation
     -- @type: boolean
     documentation = true,
@@ -86,7 +96,7 @@ Following are the default config for the `setup()`. If you want to override, jus
   },
   -- Crossref
   crossref = {
-    -- Enable documetation
+    -- Enable documentation
     -- @type: boolean
     documentation = true,
     -- Use nabla.nvim to render LaTeX equation to ASCII
@@ -96,17 +106,16 @@ Following are the default config for the `setup()`. If you want to override, jus
 }
 ```
 
-## Basic Syntax
+## YAML Syntax
 
-Add bibliography file on YAML Header
-
+### Add bibliography file on YAML Header
 ```yaml
 ---
 bibliography: path/to/references.bib
 ---
 ```
 
-Multiple bibliography files:
+### Multiple bibliography files:
 ```yaml
 ---
 bibliography:
@@ -115,9 +124,17 @@ bibliography:
 ---
 ```
 
+### Multiple named bibliography files:
+```yaml
+---
+bibliography:
+  main: path/to/references.json
+  subbib: path/to/other/references.bib
+```
+
 > A YAML metadata block is a valid YAML object, delimited by a line of three hyphens `---` at the top and a line of three hyphens `---` or three dots `...` at the bottom. A YAML metadata block may occur anywhere in the document, but if it is not at the beginning, it must be preceded by a blank line. [Pandoc.org](https://pandoc.org/MANUAL.html#extension-yaml_metadata_block)
 
-More details, see [pandoc-crossref](https://lierdakil.github.io/pandoc-crossref/)
+For more details, see [pandoc-crossref](https://lierdakil.github.io/pandoc-crossref/)
 
 ## Limitations
 
@@ -133,8 +150,9 @@ More details, see [pandoc-crossref](https://lierdakil.github.io/pandoc-crossref/
   : Listing caption {#lst:code}
   ~~~
 
-## Recomendations
+## Recommendations
 
+- [vim-pandoc](https://github.com/vim-pandoc/vim-pandoc)
 - [pandoc.nvim](https://github.com/aspeddro/pandoc.nvim)
 
 ## Alternatives
