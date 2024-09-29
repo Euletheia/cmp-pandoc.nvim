@@ -20,5 +20,8 @@ return {
     -- Enable documetation
     -- @type: boolean
     documentation = true,
+    -- Use nabla.nvim to render LaTeX equation to ASCII
+    -- @type: boolean
+    enable_nabla = false,
   },
 }

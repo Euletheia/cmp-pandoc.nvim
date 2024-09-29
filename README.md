@@ -30,7 +30,6 @@ This fork tries to provide the "best of both worlds" by expanding the work of [d
 ## Requirements
 
 - `Neovim >= 0.5.0`
-- [`plenary.nvim`](https://github.com/nvim-lua/plenary.nvim)
 - [`nabla.nvim`](https://github.com/jbyuki/nabla.nvim) (needed : for equation preview)
 
 ## Installation
@@ -38,6 +37,7 @@ This fork tries to provide the "best of both worlds" by expanding the work of [d
 #### [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 NB: If you are installing the plugin from Codeberg, you need to state its full url like this (at least for lazy):
+
 ```lua
 return{
   url = "https://codeberg.org/Euletheia/cmp-pandoc.nvim"
@@ -58,7 +58,6 @@ return {
 use {
   'aspeddro/cmp-pandoc.nvim',
   requires = {
-    'nvim-lua/plenary.nvim',
     'jbyuki/nabla.nvim' -- optional
   }
 }
@@ -67,7 +66,6 @@ use {
 #### [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'nvim-lua/plenary.nvim'
 Plug 'jbyuki/nabla.nvim' "optional
 Plug 'aspeddro/cmp-pandoc.nvim'
 ```
