@@ -40,7 +40,10 @@ NB: If you are installing the plugin from Codeberg, you need to state its full u
 
 ```lua
 return{
-  url = "https://codeberg.org/Euletheia/cmp-pandoc.nvim"
+  url = "https://codeberg.org/Euletheia/cmp-pandoc.nvim",
+  dependencies = {
+    'jbyuki/nabla.nvim' -- optional
+  },
   opts = {},
 }
 ```
@@ -48,6 +51,9 @@ return{
 ```lua
 return {
   "Euletheia/cmp-pandoc.nvim",
+  dependencies = {
+    'jbyuki/nabla.nvim' -- optional
+  },
   opts = {},
 }
 ```
@@ -151,6 +157,7 @@ bibliography:
 bibliography:
   main: path/to/references.json
   subbib: path/to/other/references.bib
+---
 ```
 
 > A YAML metadata block is a valid YAML object, delimited by a line of three hyphens `---` at the top and a line of three hyphens `---` or three dots `...` at the bottom. A YAML metadata block may occur anywhere in the document, but if it is not at the beginning, it must be preceded by a blank line. [Pandoc.org](https://pandoc.org/MANUAL.html#extension-yaml_metadata_block)
