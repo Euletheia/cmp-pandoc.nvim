@@ -76,12 +76,17 @@ M.extract_yaml_bibs = function(bufnr)
   local bibs = {}
   local is_bibliography_section = false
 
+  -- TODO : Change patterns to match multibibs !
+
   for _, value in ipairs(front_matter.raw_content) do
     if is_bibliography_section then
-      -- Strip spaces and "| " characters at the beginning of the line
+      -- Strip spaces and "- " characters at the beginning of the line, or "varname: "
       local stripped_line = string.match(value, "^%- (.*)")
+      local stripped_varline = string.match(value, "^  [%a_]+: (.+)$")
       if stripped_line then
         table.insert(bibs, stripped_line)
+      elseif stripped_varline then
+        table.insert(bibs, stripped_varline)
       else
         -- Exit the loop when a line not starting with "- " is encountered
         break
@@ -97,8 +102,6 @@ M.extract_yaml_bibs = function(bufnr)
       has_bibs = true
     end
   end
-
-  print(inspect(bibs))
 
   return {
     has_bibs = has_bibs,

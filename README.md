@@ -2,36 +2,23 @@
 
 # This fork
 
-Tries to enhance the hacks from dsanson to allow synergies between vim-pandoc & cmp-pandoc
+This fork tries to provide the "best of both worlds" by expanding the work of [dsanson](https://github.com/dsanson/cmp-pandoc.nvim) and [aspeddro](https://github.com/aspeddro/cmp-pandoc.nvim/) (the plugin original author) and adding key features I needed for my work.
 
-## Objectives
+# Exclusive Features
 
-* Parsing of multiple (csl json) bibliographies in cmp-pandoc global config
-* Adding extra csl fields like 
+* Two ways of providing bibliographies files :
+  * in the plugin configuration (setup({}) / opts = {})
+  * in the document yaml metadata block
+* Support for csl .json and .bib formats
+* Multiple named bibliographies in the style recognized by the [multibib](https://github.com/pandoc-ext/multibib) pandoc filter.
+* Additional documentation fields :
+  * original-date (only for .json)
 
-# Hacked up version (dsanson preambule)
-
-This is a hacked up and simplified version of cmp-pandoc. I've removed support for bibtex
-files, and only support json files. I've also removed support for detecting
-the bibliography in the YAML front matter. The bibliography is set globally
-using the setup function instead. I've also (temporarily) removed support for
-cross-reference completion.
-
-```lua
-require'cmp_pandoc'.setup({
-  filetypes = { "pandoc", "markdown", "rmd", 'markdown.pandoc', 'markdown.pandoc.carnap' },
-  bibliography = {
-    path = '/Users/desanso/Documents/zotero.json',
-    documentation = true,
-  },
-})
-```
-
+-------------------------
 ## Original README
 
 Pandoc source for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
-![image](https://user-images.githubusercontent.com/16160544/148705263-68701848-485d-4ebe-ac78-b901a40dd5a1.png)
 ![image](https://user-images.githubusercontent.com/16160544/148705351-6ff6fe46-0061-4c7f-989b-31f9e7be3c1c.png)
 
 ## Requirements
