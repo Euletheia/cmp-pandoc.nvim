@@ -201,6 +201,12 @@ local function parse_json_bib(filename)
     title = title:gsub("[{}]+", "")
     table.insert(doc, "*" .. title .. "*")
 
+    local directors = item.director or nil
+    if directors then
+      directors = combine_names(directors, nil)
+      table.insert(doc, directors)
+    end
+
     local authors = item.author or nil
     if authors then
       authors = combine_names(authors, nil)
@@ -243,7 +249,8 @@ local function parse_json_bib(filename)
       original_date = original_date.literal or nil
       if original_date then
         original_date = "(" .. original_date .. ")"
-        doc[4] = doc[4] .. " " .. original_date
+        local last_index = #doc
+        doc[last_index] = doc[last_index] .. " " .. original_date
         -- table.insert(doc, original_date)
       else
         original_date = item["original-date"]["date-parts"] or nil
@@ -255,9 +262,19 @@ local function parse_json_bib(filename)
         end
         if original_date then
           original_date = "(" .. original_date .. ")"
-          doc[4] = doc[4] .. " " .. original_date
-          -- table.insert(doc, original_date)
+          local last_index = #doc
+          doc[last_index] = doc[last_index] .. " " .. original_date
         end
+      end
+    end
+
+    local original_author = item["original-author"] or nil
+    if original_author then
+      original_author = original_author[1].literal or nil
+      if original_author then
+        original_author = "(" .. original_author .. ")"
+        local last_index = #doc
+        doc[last_index] = doc[last_index] .. " " .. original_author
       end
     end
 

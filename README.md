@@ -17,8 +17,9 @@ This fork tries to provide the "best of both worlds" by expanding the work of [d
   * in the document yaml metadata block
 * Support for csl `.json` and `.bib` formats
 * Multiple **named** bibliographies in the style recognized by the [`multibib`](https://github.com/pandoc-ext/multibib) pandoc filter.
-* Additional documentation fields :
-  * `original-date` (only for `.json`)
+* Additional documentation fields (only for `.json` files) :
+  * `original-date`
+  * `original-author`
 
 ### Original Features
 
