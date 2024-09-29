@@ -13,28 +13,36 @@ This fork tries to provide the "best of both worlds" by expanding the work of [d
 ### Exclusive Features
 
 * Two ways of providing bibliographies files :
-  * in the plugin configuration (setup({}) / opts = {})
+  * in the plugin configuration (`setup({})` / `opts = {}`)
   * in the document yaml metadata block
-* Support for csl .json and .bib formats
-* Multiple **named** bibliographies in the style recognized by the [multibib](https://github.com/pandoc-ext/multibib) pandoc filter.
+* Support for csl `.json` and `.bib` formats
+* Multiple **named** bibliographies in the style recognized by the [`multibib`](https://github.com/pandoc-ext/multibib) pandoc filter.
 * Additional documentation fields :
-  * original-date (only for .json)
+  * `original-date` (only for `.json`)
 
 ### Original Features
 
 - Multiple bibliography files
-- Support [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref)
+- Support [`pandoc-crossref`](https://github.com/lierdakil/pandoc-crossref)
 - Equation preview with [`nabla.nvim`](https://github.com/jbyuki/nabla.nvim)
 
 ## Requirements
 
 - `Neovim >= 0.5.0`
 - [`plenary.nvim`](https://github.com/nvim-lua/plenary.nvim)
-- [nabla.nvim](https://github.com/jbyuki/nabla.nvim) (needed : for equation preview)
+- [`nabla.nvim`](https://github.com/jbyuki/nabla.nvim) (needed : for equation preview)
 
 ## Installation
 
 #### [lazy.nvim](https://github.com/folke/lazy.nvim)
+
+NB: If you are installing the plugin from Codeberg, you need to state its full url like this (at least for lazy):
+```lua
+return{
+  url = "https://codeberg.org/Euletheia/cmp-pandoc.nvim"
+  opts = {},
+}
+```
 
 ```lua
 return {
@@ -66,15 +74,29 @@ Plug 'aspeddro/cmp-pandoc.nvim'
 
 ```lua
 require'cmp'.setup{
+  -- nvim-cmp config
   sources = {
     { name = 'cmp_pandoc' }
+    -- other cmp sources
   }
+  -- more nvim-cmp config
 }
+```
+With lazy you could also do something like that:
+
+
+
+If you are not using lazy, then you should explicitly call `setup()`:
+```lua
+require("cmp-pandoc").setup({
+  -- Your configuration goes here
+})
 ```
 
 ## Configuration (optional)
 
-Following are the default config for the `setup()`. If you want to override, just modify the option that you want then it will be merged with the default config.
+Following are the default configuration for the `setup()` (or `opts = {}` when using lazy).
+If you want to override, just modify the option that you want then it will be merged with the default specs.
 
 ```lua
 {
