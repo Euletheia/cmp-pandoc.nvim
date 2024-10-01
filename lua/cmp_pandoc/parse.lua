@@ -76,27 +76,29 @@ M.extract_yaml_bibs = function(bufnr)
   local bibs = {}
   local is_bibliography_section = false
 
-  -- TODO : Change patterns to match multibibs !
-
   for _, value in ipairs(front_matter.raw_content) do
     if is_bibliography_section then
-      -- Strip spaces and "- " characters at the beginning of the line, or "varname: "
-      local stripped_line = string.match(value, "^%- (.*)")
-      local stripped_varline = string.match(value, "^  [%a_]+: (.+)$")
-      if stripped_line then
-        table.insert(bibs, stripped_line)
-      elseif stripped_varline then
-        table.insert(bibs, stripped_varline)
+      -- pandoc-ext multibib.lua style
+      local multibib_line = string.match(value, "^%- (.*)")
+      local multibib_varline = string.match(value, "^  [%a_]+: (.+)$")
+      if multibib_line then
+        table.insert(bibs, multibib_line)
+      elseif multibib_varline then
+        table.insert(bibs, multibib_varline)
       else
-        -- Exit the loop when a line not starting with "- " is encountered
+        -- Exit when a line not starting with "- " or "  varname:" is encountered
         break
       end
     elseif string.match(value, "^bibliography: .+") then
-      -- Handle the case where bibliography line directly contains the path to a .bib file
-      local path = string.match(value, "^bibliography: (.+)$")
-      table.insert(bibs, path)
+      local single_line = string.match(value, "^bibliography: (.+)$")
+      table.insert(bibs, single_line)
       has_bibs = true
       break
+    elseif string.match(value, "^bibliography[_%w]+: .+") then
+      -- multiple-bibliographies.lua style
+      local multibib_alt = string.match(value, "^(bibliography[_%w]+): (.+)$")
+      table.insert(bibs, multibib_alt)
+      has_bibs = true
     elseif string.match(value, "^bibliography:") then
       is_bibliography_section = true
       has_bibs = true

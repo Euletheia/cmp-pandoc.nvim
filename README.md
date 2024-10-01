@@ -16,7 +16,7 @@ This fork tries to provide the "best of both worlds" by expanding the work of [d
   * in the plugin configuration (`setup({})` / `opts = {}`)
   * in the document yaml metadata block
 * Support for csl `.json` and `.bib` formats
-* Multiple **named** bibliographies in the style recognized by the [`multibib`](https://github.com/pandoc-ext/multibib) pandoc filter.
+* Multiple **named** bibliographies in the style recognized by the [`multibib`](https://github.com/pandoc-ext/multibib) pandoc filter **_&_** by the [`multiple-bibliographies`](https://github.com/pandoc/lua-filters/tree/master/multiple-bibliographies) pandoc lua filter.
 * Additional documentation fields (only for `.json` files) :
   * `original-date`
   * `original-author`
