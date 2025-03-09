@@ -1,5 +1,8 @@
 # 📑 cmp-pandoc
 
+> [!NOTE]
+> Ultimately, I will replace this source by a [blink](https://github.com/saghen/blink.cmp) one and refactor the whole code.
+
 Pandoc source for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 ![image](https://user-images.githubusercontent.com/16160544/148705351-6ff6fe46-0061-4c7f-989b-31f9e7be3c1c.png)
@@ -12,14 +15,14 @@ This fork tries to provide the "best of both worlds" by expanding the work of [d
 
 ### Exclusive Features
 
-* Two ways of providing bibliographies files :
-  * in the plugin configuration (`setup({})` / `opts = {}`)
-  * in the document yaml metadata block
-* Support for csl `.json` and `.bib` formats
-* Multiple **named** bibliographies in the style recognized by the [`multibib`](https://github.com/pandoc-ext/multibib) pandoc filter **_&_** by the [`multiple-bibliographies`](https://github.com/pandoc/lua-filters/tree/master/multiple-bibliographies) pandoc lua filter.
-* Additional documentation fields (only for `.json` files) :
-  * `original-date`
-  * `original-author`
+- Two ways of providing bibliographies files :
+  - in the plugin configuration (`setup({})` / `opts = {}`)
+  - in the document yaml metadata block
+- Support for csl `.json` and `.bib` formats
+- Multiple **named** bibliographies in the style recognized by the [`multibib`](https://github.com/pandoc-ext/multibib) pandoc filter **_&_** by the [`multiple-bibliographies`](https://github.com/pandoc/lua-filters/tree/master/multiple-bibliographies) pandoc lua filter.
+- Additional documentation fields (only for `.json` files) :
+  - `original-date`
+  - `original-author`
 
 ### Original Features
 
@@ -75,6 +78,7 @@ use {
 Plug 'jbyuki/nabla.nvim' "optional
 Plug 'aspeddro/cmp-pandoc.nvim'
 ```
+
 ## Setup
 
 ```lua
@@ -87,11 +91,11 @@ require'cmp'.setup{
   -- more nvim-cmp config
 }
 ```
+
 With lazy you could also do something like that:
 
-
-
 If you are not using lazy, then you should explicitly call `setup()`:
+
 ```lua
 require("cmp-pandoc").setup({
   -- Your configuration goes here
@@ -136,6 +140,7 @@ If you want to override, just modify the option that you want then it will be me
 ## YAML Syntax
 
 ### Add bibliography file on YAML Header
+
 ```yaml
 ---
 bibliography: path/to/references.bib
@@ -143,15 +148,17 @@ bibliography: path/to/references.bib
 ```
 
 ### Multiple bibliography files:
+
 ```yaml
 ---
 bibliography:
-- path/to/references.bib
-- path/to/other/references.bib
+  - path/to/references.bib
+  - path/to/other/references.bib
 ---
 ```
 
 ### Multiple named bibliography files:
+
 ```yaml
 ---
 bibliography:
@@ -169,14 +176,14 @@ For more details, see [pandoc-crossref](https://lierdakil.github.io/pandoc-cross
 - YAML metadata inside code blocks with `bibliography` field enable `cmp-pandoc`. The parser does not check if it is inside a fenced code block.
 - Pandoc crossref support a couple options to add code block labels, but only the following style is supported:
 
-  ~~~ 
+  ````
   ```haskell
   main :: IO ()
   main = putStrLn "Hello World!"
   ```
 
   : Listing caption {#lst:code}
-  ~~~
+  ````
 
 ## Recommendations
 
